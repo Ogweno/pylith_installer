@@ -130,14 +130,14 @@ STEP 1 - Download and unpack the installer
 
 Download the installer.
 
-  http://www.geodynamics.org/cig/software/pylith/pylith-installer-2.1.0-3.tgz
+  http://www.geodynamics.org/cig/software/pylith/pylith-installer-2.1.0-4.tgz
 
 Untar the source code for the installer:
 
   mkdir -p $HOME/src/pylith
   cd $HOME/src/pylith
-  mv $HOME/Downloads/pylith-installer-2.1.0-3.tgz
-  tar -zxf pylith-installer-2.1.0-3.tgz
+  mv $HOME/Downloads/pylith-installer-2.1.0-4.tgz
+  tar -zxf pylith-installer-2.1.0-4.tgz
 
 
 ----------------------------------------------------------------------
@@ -160,7 +160,7 @@ need to be built.
 
 Run configure with --help to see all of the command line arguments.
 
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure --help
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure --help
 
 -------
 DEFAULT
@@ -168,11 +168,11 @@ DEFAULT
 
   The default installation assumes you have
     * C, C++, and Fortran compilers
-    * Python 2.6 or later
+    * Python 2.7 or later
     * MPI
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --with-make-threads=2 \
     --prefix=$HOME/pylith
 
@@ -181,15 +181,15 @@ WITHOUT FORTRAN
 ---------------
 
   The default installation assumes you have
-    * C, C++, and Fortran compilers
-    * Python 2.6 or later
+    * C and C++ compilers
+    * Python 2.7 or later
     * MPI
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --with-fortran=no \
     --with-make-threads=2 \
-    --petsc_options="--download-chaco=1 --download-c-blas-lapack=1" \
+    --petsc_options="--download-chaco=1 --download-f2cblaslapack=1" \
     --prefix=$HOME/pylith
 
 ---------------------
@@ -202,7 +202,7 @@ DESKTOP-LINUX-MINIMAL
 
   We assume you have
     * C, C++, Fortran compilers
-    * Python 2.6 or later
+    * Python 2.7 or later
     * MPI
     * NetCDF 3.6.2 or 4.1.1
     * Proj4
@@ -210,7 +210,7 @@ DESKTOP-LINUX-MINIMAL
     * cppunit
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --disable-cppunit \
     --disable-numpy \
     --disable-proj4 \
@@ -230,7 +230,7 @@ DESKTOP-LINUX-OPENMPI
     * C, C++, Fortran compilers
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --enable-python \
     --enable-mpi=openmpi \
     --with-make-threads=2 \
@@ -240,48 +240,21 @@ DESKTOP-LINUX-OPENMPI
 DESKTOP-DARWIN
 --------------
 
-  Apple does not include a Fortran compiler with XCode. Although it is
-  possible to sometimes install a binary version of the compiler or
-  use a Darwin package manager, such as Fink or MacPorts, these can have
-  their own sets of problems (e.g., incompatibilities, additional
-  dependencies, etc).
-
-  Prior to OS X 10.10 (Yosemite) a more robust solution is to build
-  the gfortran compiler.
-
-  For OS X 10.10 (Yosemite), gcc may not be able to build Python due
-  to incompatiblities between gcc and clang in the system header
-  files. In this case, it is best to use clang and build PyLith with
-  Fortran support.
-
-  We also build openmpi in this case because we want a Fortran
-  compiler setup for MPI. Installing MPI, in turn, forces installtion
-  of Python to insure compatibility in link flags between MPI and
-  Python. Finally, we use curl to download files because it is
-  included in OS X but wget is not.
+  We recommend using the clang compiler suite supplied with the OS X
+  operating system. Note that this does not include a Fortran
+  compiler. We use curl to download files because it is included in OS
+  X but wget is not.
   
   We assume you have
     * C/C++ compilers
 
-  With Fortran support:
-
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
-    --enable-gcc=fortran \
-    --enable-python \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --enable-mpi=openmpi \
     --with-fetch=curl \
     --with-make-threads=2 \
-    --prefix=$HOME/pylith
-
-  Without Fortran support:
-
-  mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
-    --enable-mpi=openmpi \
-    --with-fetch=curl \
-    --with-make-threads=2 \
-    --with-petsc-options="--download-chaco=1 --download-fblaslapack=1" \
+    --with-fortran=no \
+    --with-petsc-options="--download-chaco=1 --download-ml=1 --download-f2cblaslapack" \
     --prefix=$HOME/pylith
 
 -------
@@ -296,7 +269,7 @@ CLUSTER
     * MPI
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --enable-python \
     --with-make-threads=2 \
     --prefix=$HOME/pylith
@@ -316,13 +289,13 @@ DEVELOPER
 
   We assume you have
     * C, C++, Fortran compilers
-    * Python 2.6 or later
+    * Python 2.7 or later
     * MPI
     * Subversion
     * Mercurial
 
   mkdir -p $HOME/build/pylith
-  $HOME/src/pylith/pylith-installer-2.1.0-3/configure \
+  $HOME/src/pylith/pylith-installer-2.1.0-4/configure \
     --with-pylith-git=master \
     --with-make-threads=2 \
     --prefix=$HOME/pylith
